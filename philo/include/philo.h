@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 13:50:46 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/09/13 15:02:25 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 #include <stdbool.h>
 #include <pthread.h>
 
+/*fork is a mutex*/
 typedef struct	s_fork
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
 }	t_fork;
 
+/*philo is a thread*/
 typedef struct	s_philo
 {
 	int				philo_id;
@@ -29,6 +31,7 @@ typedef struct	s_philo
 	bool			is_full;
 	t_fork			*first_fork;
 	t_fork			*second_fork;
+	pthread_t		thread_id;
 }	t_philo;
 
 typedef struct	s_table
@@ -38,7 +41,17 @@ typedef struct	s_table
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			meal_limit;
-
 	t_philo			*philos;
 	t_fork			*forks;
+	bool			is_end_of_simulation;
 }	t_table;
+
+/* CLEANUP & EXIT*/
+void error_exit(char *msg);
+
+/* INPUT */
+void input_check_and_init(t_table *table, char **argv);
+
+/* UTILS */
+int	ft_atoi(const char *str);
+

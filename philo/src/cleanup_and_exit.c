@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   cleanup_and_exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 13:50:41 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 14:44:01 by kjamrosz         ###   ########.fr       */
+/*   Created: 2025/09/13 14:11:13 by kjamrosz          #+#    #+#             */
+/*   Updated: 2025/09/13 14:38:34 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int main(int argc, char **argv)
+/*Print error message and exit(EXIT_FAILURE)*/
+void error_exit(char *msg)
 {
-	//printf("argc = %d\n", argc);
-	t_table	*table;
-
-	if (argc == 5 || argc == 6)
-	{
-		input_check_and_init(table, argv);
-		// start_the_dinner(); //TODO
-		//clean_exit(table); //TODO - no leaks
-	}
-	else
-	{
-		printf("Incorrect input!");
-	}
-	
-	return (0);
+	printf("ERROR: %s\n", msg);
+	exit(EXIT_FAILURE);
 }
