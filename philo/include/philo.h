@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 15:02:25 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:08:39 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <pthread.h>
+
+typedef struct	s_table;
 
 /*fork is a mutex*/
 typedef struct	s_fork
@@ -32,6 +34,7 @@ typedef struct	s_philo
 	t_fork			*first_fork;
 	t_fork			*second_fork;
 	pthread_t		thread_id;
+	t_table			*table;
 }	t_philo;
 
 typedef struct	s_table
