@@ -1,31 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 13:50:41 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 13:50:48 by kjamrosz         ###   ########.fr       */
+/*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
+/*   Updated: 2025/09/13 13:50:47 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
-
-int main(int argc, char **argv)
-{
-	//printf("argc = %d\n", argc);
-
-	if (argc == 5 || argc == 6)
-	{
-		input_check(argv);
-		// data_init();
-		// clean();
-	}
-	else
-	{
-		printf("Wrong input!");
-	}
-	
-	return (0);
-}
