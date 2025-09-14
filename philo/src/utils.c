@@ -6,11 +6,21 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 14:46:06 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 14:47:11 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:32:13 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+/* Returns time in milliseconds*/
+int	gettime(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		error_exit("gettimeofday() error");
+	return ((tv.tv_sec * 1e3) + (tv.tv_usec) / 1e3); 
+}
 
 int	ft_atoi(const char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/13 17:08:39 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:35:16 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 typedef struct	s_table;
 
@@ -47,6 +48,9 @@ typedef struct	s_table
 	t_philo			*philos;
 	t_fork			*forks;
 	bool			is_end_of_simulation;
+	bool			philos_ready;
+	pthread_mutex_t	table_mutex;
+	int				simulation_start;
 }	t_table;
 
 /* CLEANUP & EXIT*/
@@ -56,5 +60,8 @@ void error_exit(char *msg);
 void input_check_and_init(t_table *table, char **argv);
 
 /* UTILS */
+int	gettime(void);
 int	ft_atoi(const char *str);
 
+/* DINNER */
+void	start_the_dinner(t_table *table);
