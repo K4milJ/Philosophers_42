@@ -6,13 +6,13 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 17:54:47 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 21:02:18 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static void	simulation(void *input)
+static void	simulation(void *input) //func manages only 1 philo
 {
 	t_philo	*philo;
 
@@ -21,13 +21,13 @@ static void	simulation(void *input)
 	// we have to wait for all the threads - spinlock
 	ft_spinlock(philo->table);
 
-	while (!dinner_finished()) //TODO
+	while (!dinner_finished(philo->table))
 	{
-		if (philo->is_full)
+		if (philo->is_full) //is it thread safe?
 			break ;
-		// eating();
-		// sleeping();
-		// thinking();
+		eating(philo);
+		
+		thinking(philo);
 	}
 }
 
@@ -49,9 +49,10 @@ void	start_the_dinner(t_table *table)
 	//start
 	table->simulation_start = gettime();
 
-	pthread_mutex_lock(&table->table_mutex);
-	table->philos_ready = true;
-	pthread_mutex_unlock(&table->table_mutex);
+	// pthread_mutex_lock(&table->table_mutex);
+	// table->philos_ready = true;
+	// pthread_mutex_unlock(&table->table_mutex);
+	manage_bool(&table->philos_ready, true, NULL, SET);
 	//we should check if there is some error with (UN)LOCK
 
 	i = -1;
@@ -60,5 +61,7 @@ void	start_the_dinner(t_table *table)
 		pthread_join(&table->philos[i].thread_id, NULL);
 		//check for errors when joining
 	}
+
+	// in this line, all philos are full
 
 }

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 18:49:32 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 20:54:58 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@ typedef enum e_action
 	GET,
 	SET
 }	t_action;
+
+typedef enum e_timecode
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND
+}	t_timecode;
+
+typedef enum e_philo_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_1_FORK,
+	TAKE_2_FORK,
+	DIED
+}	t_philo_status;
 
 /*fork is a mutex*/
 typedef struct	s_fork
@@ -56,6 +73,7 @@ typedef struct	s_table
 	bool			is_end_of_simulation;
 	bool			philos_ready;
 	pthread_mutex_t	table_mutex;
+	pthread_mutex_t	print_mutex;
 	int				simulation_start;
 }	t_table;
 
@@ -65,15 +83,20 @@ void error_exit(char *msg);
 /* INPUT */
 void input_check_and_init(t_table *table, char **argv);
 
-/* UTILS */
-int	gettime(void);
-int	ft_atoi(const char *str);
-
 /* DINNER */
 void	start_the_dinner(t_table *table);
 
+/* UTILS FUNC */
+int	gettime(t_timecode timecode);
+int	ft_atoi(const char *str);
+void precise_usleep(long usec, t_table *table);
+
 /* UTILS_SIM */
 bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
+bool	dinner_finished(t_table *table);
 
 /* SYNCHRONIZATION */
 void	ft_spinlock(t_table *table);
+
+/* PRINT */
+void	print_status(t_philo_status status, t_philo *philo, bool debug);

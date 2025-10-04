@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 17:13:51 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 19:54:07 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void data_init(t_table *table)
 	table->is_end_of_simulation = false;
 	table->philos_ready = false;
 	pthread_mutex_init(&table->table_mutex, NULL);
+	pthread_mutex_init(&table->print_mutex, NULL);
 	table->philos = malloc(sizeof(t_philo) * table->philo_num);
 	if (!(table->philos))
 		error_exit("malloc error - philos");

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:50:00 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 18:40:20 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 19:16:28 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,9 @@ bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action)
 		return (true); //unnedeed
 	}
 	return (res); //it's probably not a good approach
+}
+
+bool dinner_finished(t_table *table)
+{
+	return (manage_bool(&table->table_mutex, &table->is_end_of_simulation, NULL, GET));
 }
