@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/14 13:00:42 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 17:54:47 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	simulation(void *input)
 	philo = (t_philo *)input;
 	
 	// we have to wait for all the threads - spinlock
-	//ft_spinlock(); //TODO
+	ft_spinlock(philo->table);
 
 	while (!dinner_finished()) //TODO
 	{

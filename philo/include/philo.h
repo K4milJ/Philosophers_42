@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/14 12:35:16 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 18:49:32 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 #include <sys/time.h>
 
 typedef struct	s_table;
+
+typedef enum e_action
+{
+	GET,
+	SET
+}	t_action;
 
 /*fork is a mutex*/
 typedef struct	s_fork
@@ -65,3 +71,9 @@ int	ft_atoi(const char *str);
 
 /* DINNER */
 void	start_the_dinner(t_table *table);
+
+/* UTILS_SIM */
+bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
+
+/* SYNCHRONIZATION */
+void	ft_spinlock(t_table *table);

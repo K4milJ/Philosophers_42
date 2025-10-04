@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/14 12:21:17 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/04 17:13:51 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void parsing(t_table *table, char **argv)
 	{
 		error_exit("Timestamps must be positive numbers!");
 	}
-	if (argv[5])
+	if (argv[5]) //what if last number is negative?
 		table->meal_limit = argv[5];
 	else
 		table->meal_limit = -1; //flag
