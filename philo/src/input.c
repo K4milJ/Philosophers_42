@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 19:54:07 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 11:18:27 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void philo_init(t_table *table)
 		philo->is_full = false;
 		philo->meal_count = 0;
 		philo->table = table;
+		pthread_mutex_init(&philo->philo_mutex, NULL);
 	}
 	fork_assign(philo, table->forks, i);
 }
@@ -81,7 +82,7 @@ static void parsing(t_table *table, char **argv)
 		error_exit("Timestamps must be positive numbers!");
 	}
 	if (argv[5]) //what if last number is negative?
-		table->meal_limit = argv[5];
+		table->meal_limit = ft_atoi(argv[5]);
 	else
 		table->meal_limit = -1; //flag
 }

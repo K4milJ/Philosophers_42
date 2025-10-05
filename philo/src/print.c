@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:53:25 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 20:52:42 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 11:18:47 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_status_debug(t_philo_status status, t_philo *philo, long elapsed_time
 		printf("%ld %d has taken 2nd fork\t%d", elapsed_time, philo->philo_id,
 			philo->second_fork->fork_id);
 	else if (status == EATING && !dinner_finished(philo->table))
-		printf("%ld %d is eating\t%d", elapsed_time, philo->philo_id, philo->meal_count);
+		printf("%ld %d is eating\t%ld", elapsed_time, philo->philo_id, philo->meal_count);
 	else if (status == SLEEPING && !dinner_finished(philo->table))
 		printf("%ld %d is sleeping", elapsed_time, philo->philo_id);
 	else if (status == THINKING && !dinner_finished(philo->table))

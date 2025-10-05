@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 20:54:58 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 11:14:27 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-typedef struct	s_table;
+#define DEBUG_MODE 0
+
+typedef struct	s_table t_table;
 
 typedef enum e_action
 {
@@ -55,9 +57,11 @@ typedef struct	s_philo
 	int				philo_id;
 	long			meal_count;
 	bool			is_full;
+	long			last_meal_time;
 	t_fork			*first_fork;
 	t_fork			*second_fork;
 	pthread_t		thread_id;
+	pthread_mutex_t	philo_mutex;
 	t_table			*table;
 }	t_philo;
 
@@ -93,6 +97,7 @@ void precise_usleep(long usec, t_table *table);
 
 /* UTILS_SIM */
 bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
+long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action);
 bool	dinner_finished(t_table *table);
 
 /* SYNCHRONIZATION */

@@ -6,11 +6,37 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:50:00 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 19:16:28 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 11:21:44 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+// functions in this file are very inelegant, DON'T LOOK AT THEM :p
+// TO BE FIXED!
+
+/* Function to safely get or set long, dest is is a pointer to value we want to set or get */
+long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action)
+{
+	long	res;
+
+	res = 0;
+	if (action == SET)
+	{
+		pthread_mutex_lock(mutex);
+		*dest = val;
+		pthread_mutex_unlock(mutex);
+		return (-42); //unnedeed
+	}
+	else if (action == GET)
+	{
+		pthread_mutex_lock(mutex);
+		res = *dest;
+		pthread_mutex_unlock(mutex);
+		return (res);
+	}
+	return (res); //it's probably not a good approach
+}
 
 /* Function to safely get or set bool, dest is is a pointer to value we want to set or get */
 bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action)
