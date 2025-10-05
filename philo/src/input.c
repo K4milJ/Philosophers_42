@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 11:18:27 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:03:19 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void philo_init(t_table *table)
 	int		i;
 
 	i = -1;
-	while (i < table->philo_num)
+	while (++i < table->philo_num)
 	{
 		philo = table->philos + 1; //pointer to (i+1)-th philo
 		philo->philo_id = i + 1;
@@ -67,7 +67,8 @@ static void data_init(t_table *table)
 		pthread_mutex_init(&table->forks[i].fork, NULL);
 		table->forks[i].fork_id = i;
 	}
-
+	philo_init(table);
+	printf(YELLOW "data init'ED\n" RESET); 	//del
 }
 
 static void parsing(t_table *table, char **argv)
@@ -85,10 +86,12 @@ static void parsing(t_table *table, char **argv)
 		table->meal_limit = ft_atoi(argv[5]);
 	else
 		table->meal_limit = -1; //flag
+	printf(YELLOW "parsing END\n" RESET); 	//del
 }
 
 void input_check_and_init(t_table *table, char **argv)
 {
+	printf(YELLOW "input_check_and_init\n" RESET); 	//del
 	parsing(table, argv);
 	data_init(table);
 }

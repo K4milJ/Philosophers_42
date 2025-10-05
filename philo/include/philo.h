@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 11:14:27 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:55:22 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include <sys/time.h>
+
+#include "colors.h"
 
 #define DEBUG_MODE 0
 

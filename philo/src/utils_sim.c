@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:50:00 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 11:21:44 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:25:33 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action)
 /* Function to safely get or set bool, dest is is a pointer to value we want to set or get */
 bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action)
 {
+	// printf(YELLOW "inside manage BOOL\n" RESET); 	//del
+
 	bool	res;
 
 	res = false;
 	if (action == SET)
 	{
+		printf(YELLOW "SET BOOL\n" RESET); 	//del
 		pthread_mutex_lock(mutex);
 		*dest = val;
 		pthread_mutex_unlock(mutex);
@@ -53,6 +56,8 @@ bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action)
 	}
 	else if (action == GET)
 	{
+		printf(YELLOW "GET BOOL\n" RESET); 	//del
+
 		pthread_mutex_lock(mutex);
 		res = *dest;
 		pthread_mutex_unlock(mutex);

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 11:43:25 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:30:14 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ static void	*simulation(void *input) //func manages only 1 philo
 	
 	// we have to wait for all the threads - spinlock
 	ft_spinlock(philo->table);
+	printf(MAGENTA "we've done ft_spinlock()\n" RESET); 	//del
 
+	
 	while (!dinner_finished(philo->table))
 	{
 		if (philo->is_full) //is it thread safe?
@@ -64,6 +66,8 @@ static void	*simulation(void *input) //func manages only 1 philo
 
 void	start_the_dinner(t_table *table)
 {
+	printf(BLUE "start_the_dinner\n" RESET); 	//del
+
 	int	i;
 
 	i = -1;
@@ -72,23 +76,30 @@ void	start_the_dinner(t_table *table)
 	else
 		while (++i < table->philo_num)
 		{
+			printf(CYAN "create philo %d\n" RESET, i); 	//del
+
 			pthread_create(&table->philos[i].thread_id, NULL, simulation,
 				&table->philos[i]);
 		}
 	//philos are ready
+	printf(GREEN "philos are ready\n" RESET); 	//del
 
 	//start
 	table->simulation_start = gettime(MILLISECOND);
+	printf(GREEN "we got time\n" RESET); 	//del
 
 	// pthread_mutex_lock(&table->table_mutex);
 	// table->philos_ready = true;
 	// pthread_mutex_unlock(&table->table_mutex);
 	manage_bool(&table->table_mutex, &table->philos_ready, true, SET);
 	//we should check if there is some error with (UN)LOCK
+	printf(GREEN "======\n" RESET); 	//del
 
 	i = -1;
 	while (++i < table->philo_num)
 	{
+		printf(BLUE "while philo %d\n" RESET, i); 	//del
+
 		pthread_join(table->philos[i].thread_id, NULL);
 		//check for errors when joining
 	}
