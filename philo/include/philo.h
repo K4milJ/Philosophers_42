@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 13:55:22 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:39:01 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,12 @@ int	ft_atoi(const char *str);
 void precise_usleep(long usec, t_table *table);
 
 /* UTILS_SIM */
-bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
-long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action);
+// bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
+// long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action);
+void	set_long(pthread_mutex_t *mutex, long *dest, long src);
+long	get_long(pthread_mutex_t *mutex, bool *val);
+void	set_bool(pthread_mutex_t *mutex, bool *dest, bool src);
+bool	get_bool(pthread_mutex_t *mutex, bool *val);
 bool	dinner_finished(t_table *table);
 
 /* SYNCHRONIZATION */

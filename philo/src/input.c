@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 14:03:19 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:04:35 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ static void parsing(t_table *table, char **argv)
 		table->meal_limit = ft_atoi(argv[5]);
 	else
 		table->meal_limit = -1; //flag
-	printf(YELLOW "parsing END\n" RESET); 	//del
+	// printf(YELLOW "parsing END\n" RESET); 	//del
 }
 
 void input_check_and_init(t_table *table, char **argv)
 {
-	printf(YELLOW "input_check_and_init\n" RESET); 	//del
+	// printf(YELLOW "input_check_and_init\n" RESET); 	//del
 	parsing(table, argv);
 	data_init(table);
 }
