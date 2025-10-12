@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/14 12:35:16 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:39:01 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,34 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-typedef struct	s_table;
+#include "colors.h"
+
+#define DEBUG_MODE 0
+
+typedef struct	s_table t_table;
+
+typedef enum e_action
+{
+	GET,
+	SET
+}	t_action;
+
+typedef enum e_timecode
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND
+}	t_timecode;
+
+typedef enum e_philo_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_1_FORK,
+	TAKE_2_FORK,
+	DIED
+}	t_philo_status;
 
 /*fork is a mutex*/
 typedef struct	s_fork
@@ -32,9 +59,11 @@ typedef struct	s_philo
 	int				philo_id;
 	long			meal_count;
 	bool			is_full;
+	long			last_meal_time;
 	t_fork			*first_fork;
 	t_fork			*second_fork;
 	pthread_t		thread_id;
+	pthread_mutex_t	philo_mutex;
 	t_table			*table;
 }	t_philo;
 
@@ -50,6 +79,7 @@ typedef struct	s_table
 	bool			is_end_of_simulation;
 	bool			philos_ready;
 	pthread_mutex_t	table_mutex;
+	pthread_mutex_t	print_mutex;
 	int				simulation_start;
 }	t_table;
 
@@ -59,9 +89,25 @@ void error_exit(char *msg);
 /* INPUT */
 void input_check_and_init(t_table *table, char **argv);
 
-/* UTILS */
-int	gettime(void);
-int	ft_atoi(const char *str);
-
 /* DINNER */
 void	start_the_dinner(t_table *table);
+
+/* UTILS FUNC */
+int	gettime(t_timecode timecode);
+int	ft_atoi(const char *str);
+void precise_usleep(long usec, t_table *table);
+
+/* UTILS_SIM */
+// bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
+// long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action);
+void	set_long(pthread_mutex_t *mutex, long *dest, long src);
+long	get_long(pthread_mutex_t *mutex, bool *val);
+void	set_bool(pthread_mutex_t *mutex, bool *dest, bool src);
+bool	get_bool(pthread_mutex_t *mutex, bool *val);
+bool	dinner_finished(t_table *table);
+
+/* SYNCHRONIZATION */
+void	ft_spinlock(t_table *table);
+
+/* PRINT */
+void	print_status(t_philo_status status, t_philo *philo, bool debug);

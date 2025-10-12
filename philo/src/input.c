@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/09/14 12:21:17 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:04:35 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ static void philo_init(t_table *table)
 	int		i;
 
 	i = -1;
-	while (i < table->philo_num)
+	while (++i < table->philo_num)
 	{
 		philo = table->philos + 1; //pointer to (i+1)-th philo
 		philo->philo_id = i + 1;
 		philo->is_full = false;
 		philo->meal_count = 0;
 		philo->table = table;
+		pthread_mutex_init(&philo->philo_mutex, NULL);
 	}
 	fork_assign(philo, table->forks, i);
 }
@@ -54,6 +55,7 @@ static void data_init(t_table *table)
 	table->is_end_of_simulation = false;
 	table->philos_ready = false;
 	pthread_mutex_init(&table->table_mutex, NULL);
+	pthread_mutex_init(&table->print_mutex, NULL);
 	table->philos = malloc(sizeof(t_philo) * table->philo_num);
 	if (!(table->philos))
 		error_exit("malloc error - philos");
@@ -66,7 +68,8 @@ static void data_init(t_table *table)
 		pthread_mutex_init(&table->forks[i].fork, NULL);
 		table->forks[i].fork_id = i;
 	}
-
+	philo_init(table);
+	printf(YELLOW "data init'ED\n" RESET); 	//del
 }
 
 /* Saves input data to the struct */
@@ -81,14 +84,16 @@ static void parsing(t_table *table, char **argv)
 	{
 		error_exit("Timestamps must be positive numbers!");
 	}
-	if (argv[5])
-		table->meal_limit = argv[5];
+	if (argv[5]) //what if last number is negative?
+		table->meal_limit = ft_atoi(argv[5]);
 	else
 		table->meal_limit = -1; //flag
+	// printf(YELLOW "parsing END\n" RESET); 	//del
 }
 
 void input_check_and_init(t_table *table, char **argv)
 {
+	// printf(YELLOW "input_check_and_init\n" RESET); 	//del
 	parsing(table, argv);
 	data_init(table);
 }
