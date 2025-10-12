@@ -46,6 +46,7 @@ static void philo_init(t_table *table)
 	fork_assign(philo, table->forks, i);
 }
 
+/* Initializes data */
 static void data_init(t_table *table)
 {
 	int	i;
@@ -68,6 +69,7 @@ static void data_init(t_table *table)
 
 }
 
+/* Saves input data to the struct */
 static void parsing(t_table *table, char **argv)
 {
 	table->philo_num = ft_atoi(argv[1]);

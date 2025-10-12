@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		printf("Incorrect input!");
+		error_exit("Incorrect input!");
 	}
 	
 	return (0);
