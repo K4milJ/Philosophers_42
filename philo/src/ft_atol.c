@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 16:01:34 by kjamrosz          #+#    #+#             */
+/*   Updated: 2025/10/14 16:03:14 by kjamrosz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philo.h"
 
 static bool is_digit(char c)
@@ -19,11 +31,11 @@ static const char *valid_input(const char *str)
 
 	// 1) Skip spaces
 	while (is_space(*str))
-		++str;
+		str++;
 
 	// 2) Skip '+' but reject '-'
 	if (*str == '+')
-		++str;
+		str++;
 	else if (*str == '-')
 		error_exit("Only positive values");
 
@@ -35,7 +47,7 @@ static const char *valid_input(const char *str)
 
 	// 4) Count digits
 	while (is_digit(*str++))
-		++len;
+		len++;
 
 		// 5) Limit to 10 digits
 	if (len > 10)
@@ -51,7 +63,10 @@ long	ft_atol(const char *str)
 	num = 0;
 	str = valid_input(str);
 	while (is_digit(*str))
-		num = (num * 10) + (*str++ - 48);
+	{
+		num = (num * 10) + (*str - 48);
+		str++;
+	}	
 	if (num > INT_MAX)
 		error_exit("The value is too big, INT_MAX is the limit");
 	return (num);

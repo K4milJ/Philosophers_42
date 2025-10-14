@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:53:25 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/05 11:18:47 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:51:54 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 	long	elapsed_time;
 
 	elapsed_time = gettime(MILLISECOND) - philo->table->simulation_start;
-	pthread_mutex_lock(&philo->table->print_mutex);
+
+	if (philo->is_full) //??
+		return ;
+
+	// pthread_mutex_lock(&philo->table->print_mutex);
+	safe_mutex_handle(&philo->table->print_mutex, LOCK);
 	if (debug)
 		print_status_debug(status, philo, elapsed_time);
 	else
@@ -51,6 +56,7 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 			printf("%ld %d is thinking", elapsed_time, philo->philo_id);
 		else if (status == DIED && !dinner_finished(philo->table))
 			printf("%ld %d died", elapsed_time, philo->philo_id);
-		}
-	pthread_mutex_unlock(&philo->table->print_mutex);
+	}
+	// pthread_mutex_unlock(&philo->table->print_mutex);
+	safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
 }

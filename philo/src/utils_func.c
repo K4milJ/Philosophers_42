@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 14:46:06 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/04 19:50:56 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:44:51 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	gettime(t_timecode timecode)
 
 void precise_usleep(long usec, t_table *table)
 {
-	long start;
-	long elapsed;
-	long rem;
+	long	start;
+	long	elapsed;
+	long	rem;
 
 	start = gettime(MICROSECOND);
 	while (gettime(MICROSECOND) - start < usec)

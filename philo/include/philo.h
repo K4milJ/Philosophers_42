@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/09 16:39:01 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:32:11 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,29 @@
 #include <pthread.h>
 #include <sys/time.h>
 #include <limits.h>
-
-#include "colors.h"
+#include <errno.h>
 
 #define DEBUG_MODE 0
 
 typedef struct	s_table t_table;
 
-typedef enum e_action
+// typedef enum e_action
+// {
+// 	GET,
+// 	SET
+// }	t_action;
+
+
+typedef enum e_opcode
 {
-	GET,
-	SET
-}	t_action;
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH
+}	t_opcode;
 
 typedef enum e_timecode
 {
@@ -75,20 +86,22 @@ typedef struct	s_table
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			meal_limit;
-	t_philo			*philos;
-	t_fork			*forks;
 	bool			is_end_of_simulation;
 	bool			philos_ready;
+	long			simulation_start;
+	t_philo			*philos;
+	t_fork			*forks;
 	pthread_mutex_t	table_mutex;
 	pthread_mutex_t	print_mutex;
-	int				simulation_start;
 }	t_table;
 
 /* CLEANUP & EXIT*/
 void error_exit(char *msg);
 
 /* INPUT */
-void input_check_and_init(t_table *table, char **argv);
+// void input_check_and_init(t_table *table, char **argv);
+void data_init(t_table *table);
+void parsing(t_table *table, char **argv);
 
 /* DINNER */
 void	start_the_dinner(t_table *table);
@@ -111,3 +124,12 @@ void	ft_spinlock(t_table *table);
 
 /* PRINT */
 void	print_status(t_philo_status status, t_philo *philo, bool debug);
+
+/* FT_ATOL */
+long	ft_atol(const char *str);
+
+/* SAFE FUNCTIONS */
+void	*safe_malloc(size_t bytes);
+void	safe_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
+
