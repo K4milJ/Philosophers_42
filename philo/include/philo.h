@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include <sys/time.h>
+#include <limits.h>
 
 #include "colors.h"
 
@@ -94,7 +95,6 @@ void	start_the_dinner(t_table *table);
 
 /* UTILS FUNC */
 int	gettime(t_timecode timecode);
-int	ft_atoi(const char *str);
 void precise_usleep(long usec, t_table *table);
 
 /* UTILS_SIM */
