@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:53:27 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:41:41 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:04:37 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,16 @@ void	ft_spinlock(t_table *table)
 {
 	while (!get_bool(&table->table_mutex, &table->philos_ready))
 	;
+}
+
+bool	all_philos_running(pthread_mutex_t *mutex, long *running_philos_num, long philo_num)
+{
+	bool	ret;
+
+	ret = false;
+	safe_mutex_handle(mutex, LOCK);
+	if (*running_philos_num == philo_num)
+		ret = true;
+	safe_mutex_handle(mutex, UNLOCK);
+	return (ret);
 }

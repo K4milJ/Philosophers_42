@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:41 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:39:48 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:39:35 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 		input_check_and_init(&table, argv); //here all fine
 
 		start_the_dinner(&table); //here's an issue
-		//clean_exit(table); //TODO - no leaks
+		clean_exit(&table);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:39:29 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:39:18 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ static void	*simulation(void *input) //func manages only 1 philo
 	// we have to wait for all the threads - spinlock
 	ft_spinlock(philo->table);
 	
+	//set last meal time
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+
+	//synchro spinlock
+	//incease running_philos num
+	safe_mutex_handle(&philo->table->table_mutex, LOCK);
+	philo->table->running_philos_num++;
+	safe_mutex_handle(&philo->table->table_mutex, UNLOCK);
+
+
+
 	while (!dinner_finished(philo->table))
 	{
 		if (philo->is_full) //is it thread safe?
@@ -87,6 +98,9 @@ void	start_the_dinner(t_table *table)
 		}
 	//philos are ready
 
+	// monitor
+	safe_thread_handle(&table->monitor, dinner_monitor, table, CREATE);
+
 	//start
 	table->simulation_start = gettime(MILLISECOND);
 
@@ -106,4 +120,7 @@ void	start_the_dinner(t_table *table)
 		//check for errors when joining
 	}
 	// in this line, all philos are full
+	set_bool(&table->table_mutex, &table->is_end_of_simulation, true);
+
+	safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
 }

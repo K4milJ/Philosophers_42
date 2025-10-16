@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:41:21 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:49:27 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void data_init(t_table *table)
 
 	table->is_end_of_simulation = false;
 	table->philos_ready = false;
+	table->running_philos_num = 0;
 	// pthread_mutex_init(&table->table_mutex, NULL);
 	// pthread_mutex_init(&table->print_mutex, NULL);
 	safe_mutex_handle(&table->table_mutex, INIT);

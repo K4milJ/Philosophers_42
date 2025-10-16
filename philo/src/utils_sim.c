@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:50:00 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:42:29 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:10:26 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	set_long(pthread_mutex_t *mutex, long *dest, long src)
 	safe_mutex_handle(mutex, LOCK);
 	*dest = src;
 	safe_mutex_handle(mutex, UNLOCK);
-
 }
 
-long	get_long(pthread_mutex_t *mutex, bool *val)
+long	get_long(pthread_mutex_t *mutex, long *val)
 {
 	long	ret;
 

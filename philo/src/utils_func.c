@@ -6,11 +6,28 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 14:46:06 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:42:04 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:56:45 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+void	clean_exit(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = -1;
+	while (++i < table->philo_num)
+	{
+		philo = table->philos + i;
+		safe_mutex_handle(&philo->philo_mutex, DESTROY);
+	}
+	safe_mutex_handle(&table->print_mutex, DESTROY);
+	safe_mutex_handle(&table->table_mutex, DESTROY);
+	free(table->forks);
+	free(table->philos);
+}
 
 /*Print error message and exit(EXIT_FAILURE)*/
 void error_exit(char *msg)
