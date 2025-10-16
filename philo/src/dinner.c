@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:31:51 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:39:29 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,19 @@ static void	eating(t_philo *philo)
 }
 
 static void	*simulation(void *input) //func manages only 1 philo
-{	//SOME ISSUE HERE
+{
 	t_philo	*philo;
 
 	philo = (t_philo *)input;
 	
 	// we have to wait for all the threads - spinlock
 	ft_spinlock(philo->table);
-	// printf("\twe've done ft_spinlock()\n"); 	//del
-	// return NULL; //DEL
 	
 	while (!dinner_finished(philo->table))
 	{
-		// printf("\twhile (!dinner_finished(philo->table))\n"); //del
 		if (philo->is_full) //is it thread safe?
 			break ;
 		eating(philo);
-
-		//we cannot reach this line !!!
-		// printf("ATE\n"); //del
 
 		print_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table->time_to_sleep, philo->table);
@@ -76,8 +70,6 @@ static void	*simulation(void *input) //func manages only 1 philo
 
 void	start_the_dinner(t_table *table)
 {
-	//printf(BLUE "start_the_dinner\n" RESET); 	//del
-
 	int	i;
 
 	i = -1;
@@ -88,8 +80,6 @@ void	start_the_dinner(t_table *table)
 	else
 		while (++i < table->philo_num) //in this while we have an issue
 		{
-			// printf(CYAN "create philo %d\n" RESET, i); 	//del
-
 			// pthread_create(&table->philos[i].thread_id, NULL, simulation,
 			// 	&table->philos[i]); //there is some error here
 			safe_thread_handle(&table->philos[i].thread_id, simulation,
@@ -99,29 +89,21 @@ void	start_the_dinner(t_table *table)
 
 	//start
 	table->simulation_start = gettime(MILLISECOND);
-	// printf(GREEN "we got time\n" RESET); 	//del
 
 	// pthread_mutex_lock(&table->table_mutex);
 	// table->philos_ready = true;
 	// pthread_mutex_unlock(&table->table_mutex);
 	set_bool(&table->table_mutex, &table->philos_ready, true);
 
-	// sleep(10);
-	// return ; //DEL
-	
 	//we should check if there is some error with (UN)LOCK
 	// printf(GREEN "======\n" RESET); 	//del
 
 	i = -1;
 	while (++i < table->philo_num)
 	{
-		// printf(BLUE "while philo %d\n" RESET, i); 	//del
-
 		// pthread_join(table->philos[i].thread_id, NULL);
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
 		//check for errors when joining
 	}
-
 	// in this line, all philos are full
-
 }

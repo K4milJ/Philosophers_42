@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:01:34 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 16:03:14 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:40:44 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,23 @@ static bool is_space(char c)
 
 static const char *valid_input(const char *str)
 {
-	int len;			// length of the string
-	const char *number;	// pointer to the numeric part
+	int			len;
+	const char	*number;
 
 	len = 0;
-
-	// 1) Skip spaces
 	while (is_space(*str))
 		str++;
-
-	// 2) Skip '+' but reject '-'
 	if (*str == '+')
 		str++;
 	else if (*str == '-')
 		error_exit("Only positive values");
-
-	// 3) Ensure first character is a digit
 	if (!is_digit(*str))
 		error_exit("The input is not a correct digit");
-
 	number = str;
-
-	// 4) Count digits
 	while (is_digit(*str++))
 		len++;
-
-		// 5) Limit to 10 digits
 	if (len > 10)
 		error_exit("The value is too big, INT_MAX is the limit");
-
 	return (number);
 }
 

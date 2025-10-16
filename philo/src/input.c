@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 13:53:51 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:41:21 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*Function assigning forks to a given philosopher.*/
 static void fork_assign(t_philo *philo, t_fork *forks, int pos)
 {
-	//n-th philo will have n-th and (n+1)-th fork available
 	if (philo->philo_id % 2 == 0) //avoid deadlock
 	{
 		philo->first_fork = &forks[pos];
@@ -26,7 +25,6 @@ static void fork_assign(t_philo *philo, t_fork *forks, int pos)
 		philo->first_fork = &forks[(pos + 1) % philo->table->philo_num];
 		philo->second_fork = &forks[pos];
 	}
-	
 }
 
 static void philo_init(t_table *table)
@@ -37,7 +35,7 @@ static void philo_init(t_table *table)
 	i = -1;
 	while (++i < table->philo_num)
 	{
-		philo = table->philos + i; //pointer to (i+1)-th philo
+		philo = table->philos + i;
 		philo->philo_id = i + 1;
 		philo->is_full = false;
 		philo->meal_count = 0;
@@ -76,7 +74,6 @@ void data_init(t_table *table)
 		table->forks[i].fork_id = i;
 	}
 	philo_init(table);
-	// printf(YELLOW "data init'ED\n" RESET); 	//del
 }
 
 /* Saves input data to the struct */
@@ -95,12 +92,10 @@ void parsing(t_table *table, char **argv)
 		table->meal_limit = ft_atol(argv[5]);
 	else
 		table->meal_limit = -1; //flag
-	// printf(YELLOW "parsing END\n" RESET); 	//del
 }
 
 void input_check_and_init(t_table *table, char **argv)
 {
-	// printf(YELLOW "input_check_and_init\n" RESET); 	//del
 	parsing(table, argv);
 	data_init(table);
 }

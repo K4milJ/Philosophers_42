@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:50:00 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 18:14:54 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:42:29 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ long	get_long(pthread_mutex_t *mutex, bool *val)
 
 void	set_bool(pthread_mutex_t *mutex, bool *dest, bool src)
 {
-	// printf(BYELLOW "SET BOOL\n" RESET); 	//del
 	safe_mutex_handle(mutex, LOCK);
 	*dest = src;
 	safe_mutex_handle(mutex, UNLOCK);
@@ -40,8 +39,6 @@ void	set_bool(pthread_mutex_t *mutex, bool *dest, bool src)
 
 bool	get_bool(pthread_mutex_t *mutex, bool *val)
 {
-	// printf(YELLOW "GET BOOL\n" RESET); 	//del
-
 	bool	ret;
 
 	safe_mutex_handle(mutex, LOCK);
@@ -52,8 +49,6 @@ bool	get_bool(pthread_mutex_t *mutex, bool *val)
 
 bool dinner_finished(t_table *table)
 {
-	// printf(GREEN "inside> dinner_finished\n" RESET); 	//del
-
 	return (get_bool(&table->table_mutex, &table->is_end_of_simulation));
 }
 
