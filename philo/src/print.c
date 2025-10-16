@@ -6,13 +6,13 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:53:25 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 17:51:54 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:52:39 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	print_status_debug(t_philo_status status, t_philo *philo, long elapsed_time)
+static void	print_status_debug(t_philo_status status, t_philo *philo, long elapsed_time)
 {
 	if (status == TAKE_1_FORK && !dinner_finished(philo->table))
 		printf("%ld %d has taken 1st fork\t%d", elapsed_time, philo->philo_id,

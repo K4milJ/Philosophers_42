@@ -6,11 +6,18 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 14:46:06 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 17:44:51 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:47:17 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+/*Print error message and exit(EXIT_FAILURE)*/
+void error_exit(char *msg)
+{
+	printf("ERROR: %s\n", msg);
+	exit(EXIT_FAILURE);
+}
 
 /* Returns time */
 int	gettime(t_timecode timecode)
