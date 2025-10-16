@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:03:19 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 16:51:06 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:24:14 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-static void	handle_mutex_error(int status, t_opcode opcode)
+static void	handle_mutex_error(int status, t_opcode opcode) //add DESTROY
 {
 	if (status == 0)
 		return ;

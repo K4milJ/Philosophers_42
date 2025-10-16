@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/14 18:14:35 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:31:51 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,19 @@ static void	*simulation(void *input) //func manages only 1 philo
 	philo = (t_philo *)input;
 	
 	// we have to wait for all the threads - spinlock
-	ft_spinlock(philo->table); //THERE IS SEGFAULT
-	// printf(MAGENTA "we've done ft_spinlock()\n" RESET); 	//del
+	ft_spinlock(philo->table);
+	// printf("\twe've done ft_spinlock()\n"); 	//del
 	// return NULL; //DEL
 	
 	while (!dinner_finished(philo->table))
 	{
+		// printf("\twhile (!dinner_finished(philo->table))\n"); //del
 		if (philo->is_full) //is it thread safe?
 			break ;
 		eating(philo);
+
+		//we cannot reach this line !!!
+		// printf("ATE\n"); //del
 
 		print_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table->time_to_sleep, philo->table);

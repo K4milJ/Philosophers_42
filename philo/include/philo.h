@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 12:54:38 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:29:56 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	start_the_dinner(t_table *table);
 long	ft_atol(const char *str);
 
 /* INPUT */
-// void input_check_and_init(t_table *table, char **argv);
+void input_check_and_init(t_table *table, char **argv);
 void data_init(t_table *table);
 void parsing(t_table *table, char **argv);
 
@@ -119,7 +119,7 @@ void	ft_spinlock(t_table *table);
 
 /* UTILS FUNC */
 void error_exit(char *msg);
-int	gettime(t_timecode timecode);
+long	gettime(t_timecode timecode);
 void precise_usleep(long usec, t_table *table);
 
 /* UTILS_SIM */

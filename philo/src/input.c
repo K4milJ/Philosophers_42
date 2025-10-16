@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 13:13:56 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:53:51 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ void parsing(t_table *table, char **argv)
 	// printf(YELLOW "parsing END\n" RESET); 	//del
 }
 
-// void input_check_and_init(t_table *table, char **argv)
-// {
-// 	// printf(YELLOW "input_check_and_init\n" RESET); 	//del
-// 	parsing(table, argv);
-// 	data_init(table);
-// }
+void input_check_and_init(t_table *table, char **argv)
+{
+	// printf(YELLOW "input_check_and_init\n" RESET); 	//del
+	parsing(table, argv);
+	data_init(table);
+}
