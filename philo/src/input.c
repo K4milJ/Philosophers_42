@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 12:36:12 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:13:56 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void philo_init(t_table *table)
 	i = -1;
 	while (++i < table->philo_num)
 	{
-		philo = table->philos + 1; //pointer to (i+1)-th philo
+		philo = table->philos + i; //pointer to (i+1)-th philo
 		philo->philo_id = i + 1;
 		philo->is_full = false;
 		philo->meal_count = 0;
