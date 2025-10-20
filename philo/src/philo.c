@@ -18,15 +18,13 @@ int main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
-		input_check_and_init(&table, argv); //here all fine
-
-		start_the_dinner(&table); //here's an issue
+		input_check_and_init(&table, argv);
+		start_the_dinner(&table);
 		clean_exit(&table);
 	}
 	else
 	{
 		error_exit("Incorrect input!");
 	}
-	
 	return (0);
 }

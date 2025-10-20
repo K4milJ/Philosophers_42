@@ -18,7 +18,8 @@ static bool	is_philo_dead(t_philo *philo)
 
 	if (get_bool(&philo->philo_mutex, &philo->is_full))
 		return (false);
-	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex, &philo->last_meal_time);
+	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex,
+			&philo->last_meal_time);
 	if (elapsed > (philo->table->time_to_die / 1e3))
 		return (true);
 	return (false);
@@ -31,7 +32,7 @@ void	*dinner_monitor(void *input)
 
 	table = (t_table *)input;
 	while (!all_philos_running(&table->table_mutex, &table->running_philos_num,
-			table->philo_num)) //spinlock
+			table->philo_num))
 		;
 	while (!dinner_finished(table))
 	{
@@ -40,7 +41,8 @@ void	*dinner_monitor(void *input)
 		{
 			if (is_philo_dead(table->philos + i))
 			{
-				set_bool(&table->table_mutex, &table->is_end_of_simulation, true);
+				set_bool(&table->table_mutex, &table->is_end_of_simulation,
+						true);
 				print_status(DIED, table->philos + i, DEBUG_MODE);
 			}
 		}

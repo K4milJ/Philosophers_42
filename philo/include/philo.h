@@ -23,13 +23,6 @@
 
 typedef struct	s_table t_table;
 
-// typedef enum e_action
-// {
-// 	GET,
-// 	SET
-// }	t_action;
-
-
 typedef enum e_opcode
 {
 	LOCK,
@@ -58,14 +51,12 @@ typedef enum e_philo_status
 	DIED
 }	t_philo_status;
 
-/*fork is a mutex*/
 typedef struct	s_fork
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
 }	t_fork;
 
-/*philo is a thread*/
 typedef struct	s_philo
 {
 	int				philo_id;
@@ -118,11 +109,13 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug);
 /* SAFE FUNCTIONS */
 void	*safe_malloc(size_t bytes);
 void	safe_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
-void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
+		t_opcode opcode);
 
 /* SYNCHRONIZATION */
 void	ft_spinlock(t_table *table);
-bool	all_philos_running(pthread_mutex_t *mutex, long *running_philos_num, long philo_num);
+bool	all_philos_running(pthread_mutex_t *mutex, long *running_philos_num,
+		long philo_num);
 void	desync_philos(t_philo *philo);
 
 /* UTILS FUNC */
@@ -132,8 +125,6 @@ long	gettime(t_timecode timecode);
 void	precise_usleep(long usec, t_table *table);
 
 /* UTILS_SIM */
-// bool	manage_bool(pthread_mutex_t *mutex, bool *dest, bool val, t_action action);
-// long	manage_long(pthread_mutex_t *mutex, long *dest, long val, t_action action);
 void	set_long(pthread_mutex_t *mutex, long *dest, long src);
 long	get_long(pthread_mutex_t *mutex, long *val);
 void	set_bool(pthread_mutex_t *mutex, bool *dest, bool src);

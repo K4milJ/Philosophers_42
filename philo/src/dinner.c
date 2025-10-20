@@ -98,7 +98,7 @@ void	start_the_dinner(t_table *table)
 		safe_thread_handle(&table->philos[0].thread_id, one_philo,
 			&table->philos[0], CREATE);
 	else
-		while (++i < table->philo_num) //in this while we have an issue
+		while (++i < table->philo_num)
 		{
 			safe_thread_handle(&table->philos[i].thread_id, simulation,
 					&table->philos[i], CREATE);

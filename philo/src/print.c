@@ -12,16 +12,18 @@
 
 #include "../include/philo.h"
 
-static void	print_status_debug(t_philo_status status, t_philo *philo, long elapsed_time)
+static void	print_status_debug(t_philo_status status, t_philo *philo,
+		long elapsed_time)
 {
 	if (status == TAKE_1_FORK && !dinner_finished(philo->table))
 		printf("%ld %d has taken 1st fork\t%d\n", elapsed_time, philo->philo_id,
-			philo->first_fork->fork_id);
+				philo->first_fork->fork_id);
 	else if (status == TAKE_2_FORK && !dinner_finished(philo->table))
 		printf("%ld %d has taken 2nd fork\t%d\n", elapsed_time, philo->philo_id,
-			philo->second_fork->fork_id);
+				philo->second_fork->fork_id);
 	else if (status == EATING && !dinner_finished(philo->table))
-		printf("%ld %d is eating\t%ld\n", elapsed_time, philo->philo_id, philo->meal_count);
+		printf("%ld %d is eating\t%ld\n", elapsed_time, philo->philo_id,
+				philo->meal_count);
 	else if (status == SLEEPING && !dinner_finished(philo->table))
 		printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
 	else if (status == THINKING && !dinner_finished(philo->table))
@@ -36,10 +38,8 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 
 	elapsed_time = gettime(MILLISECOND) - philo->table->simulation_start;
 
-	if (philo->is_full) //??
+	if (philo->is_full)
 		return ;
-
-	// pthread_mutex_lock(&philo->table->print_mutex);
 	safe_mutex_handle(&philo->table->print_mutex, LOCK);
 	if (debug)
 		print_status_debug(status, philo, elapsed_time);
@@ -57,6 +57,5 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 		else if (status == DIED && !dinner_finished(philo->table))
 			printf("%ld %d died\n", elapsed_time, philo->philo_id);
 	}
-	// pthread_mutex_unlock(&philo->table->print_mutex);
 	safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
 }

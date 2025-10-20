@@ -13,9 +13,9 @@
 #include "../include/philo.h"
 
 /*Function assigning forks to a given philosopher.*/
-static void fork_assign(t_philo *philo, t_fork *forks, int pos)
+static void	fork_assign(t_philo *philo, t_fork *forks, int pos)
 {
-	if (philo->philo_id % 2 == 0) //avoid deadlock
+	if (philo->philo_id % 2 == 0)
 	{
 		philo->first_fork = &forks[pos];
 		philo->second_fork = &forks[(pos + 1) % philo->table->philo_num];
@@ -27,7 +27,7 @@ static void fork_assign(t_philo *philo, t_fork *forks, int pos)
 	}
 }
 
-static void philo_init(t_table *table)
+static void	philo_init(t_table *table)
 {
 	t_philo	*philo;
 	int		i;
@@ -40,37 +40,26 @@ static void philo_init(t_table *table)
 		philo->is_full = false;
 		philo->meal_count = 0;
 		philo->table = table;
-		// pthread_mutex_init(&philo->philo_mutex, NULL);
 		safe_mutex_handle(&philo->philo_mutex, INIT);
-	
 		fork_assign(philo, table->forks, i);
 	}
 }
 
 /* Initializes data */
-void data_init(t_table *table)
+void	data_init(t_table *table)
 {
 	int	i;
 
 	table->is_end_of_simulation = false;
 	table->philos_ready = false;
 	table->running_philos_num = 0;
-	// pthread_mutex_init(&table->table_mutex, NULL);
-	// pthread_mutex_init(&table->print_mutex, NULL);
 	safe_mutex_handle(&table->table_mutex, INIT);
 	safe_mutex_handle(&table->print_mutex, INIT);
 	table->philos = safe_malloc(sizeof(t_philo) * table->philo_num);
 	table->forks = safe_malloc(sizeof(t_fork) * table->philo_num);
-	// table->philos = malloc(sizeof(t_philo) * table->philo_num);
-	// if (!(table->philos))
-	// 	error_exit("malloc error - philos");
-	// table->forks = malloc(sizeof(t_fork) * table->philo_num);
-	// if (!(table->forks))
-	// 	error_exit("malloc error - forks");
 	i = -1;
-	while (++i < table->philo_num) //init for mutexes
+	while (++i < table->philo_num)
 	{
-		// pthread_mutex_init(&table->forks[i].fork, NULL);
 		safe_mutex_handle(&table->forks[i].fork, INIT);
 		table->forks[i].fork_id = i;
 	}
@@ -78,7 +67,7 @@ void data_init(t_table *table)
 }
 
 /* Saves input data to the struct */
-void parsing(t_table *table, char **argv)
+void	parsing(t_table *table, char **argv)
 {
 	table->philo_num = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
@@ -89,13 +78,13 @@ void parsing(t_table *table, char **argv)
 	{
 		error_exit("Timestamps must bigger than 60ms");
 	}
-	if (argv[5]) //what if last number is negative?
+	if (argv[5])
 		table->meal_limit = ft_atol(argv[5]);
 	else
-		table->meal_limit = -1; //flag
+		table->meal_limit = -1;
 }
 
-void input_check_and_init(t_table *table, char **argv)
+void	input_check_and_init(t_table *table, char **argv)
 {
 	parsing(table, argv);
 	data_init(table);

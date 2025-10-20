@@ -46,7 +46,7 @@ bool	get_bool(pthread_mutex_t *mutex, bool *val)
 	return (ret);
 }
 
-bool dinner_finished(t_table *table)
+bool	dinner_finished(t_table *table)
 {
 	return (get_bool(&table->table_mutex, &table->is_end_of_simulation));
 }
