@@ -99,6 +99,7 @@ typedef struct	s_table
 
 /* DINNER */
 void	start_the_dinner(t_table *table);
+void	thinking(t_philo *philo, bool before_sim);
 
 /* FT_ATOL */
 long	ft_atol(const char *str);
@@ -122,6 +123,7 @@ void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_o
 /* SYNCHRONIZATION */
 void	ft_spinlock(t_table *table);
 bool	all_philos_running(pthread_mutex_t *mutex, long *running_philos_num, long philo_num);
+void	desync_philos(t_philo *philo);
 
 /* UTILS FUNC */
 void	clean_exit(t_table *table);

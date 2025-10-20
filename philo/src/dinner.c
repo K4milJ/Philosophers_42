@@ -12,24 +12,47 @@
 
 #include "../include/philo.h"
 
-static void	thinking(t_philo *philo) //to be developed
+void	*one_philo(void *input)
 {
-	print_status(THINKING, philo, DEBUG_MODE);
+	t_philo *philo;
+
+	philo = (t_philo *)input;
+	ft_spinlock(philo->table);
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
+	safe_mutex_handle(&philo->table->table_mutex, LOCK);
+	philo->table->running_philos_num++;
+	safe_mutex_handle(&philo->table->table_mutex, UNLOCK);
+	print_status(TAKE_1_FORK, philo, DEBUG_MODE);
+	while (!dinner_finished(philo->table))
+		usleep(200);
+	return (NULL);
+}
+
+void	thinking(t_philo *philo, bool before_sim)
+{
+	long	t_think;
+	long	t_eat;
+	long	t_sleep;
+
+	if (!before_sim)
+		print_status(THINKING, philo, DEBUG_MODE);
+	if (philo->table->philo_num % 2 == 0)
+		return;
+
+	t_eat = philo->table->time_to_eat;
+	t_sleep = philo->table->time_to_sleep;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	precise_usleep(t_think * 0.42, philo->table);
 }
 
 static void	eating(t_philo *philo)
 {
-	// printf(RED "EATING\n" RESET); 	//del
-	
-	//lock
-	// pthread_mutex_lock(&philo->first_fork->fork);
 	safe_mutex_handle(&philo->first_fork->fork, LOCK);
 	print_status(TAKE_1_FORK, philo, DEBUG_MODE);
-	// pthread_mutex_lock(&philo->second_fork->fork);
 	safe_mutex_handle(&philo->second_fork->fork, LOCK);
 	print_status(TAKE_2_FORK, philo, DEBUG_MODE);
-
-	//do the stuff
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	philo->meal_count++;
 	print_status(EATING, philo, DEBUG_MODE);
@@ -37,44 +60,29 @@ static void	eating(t_philo *philo)
 	if (philo->table->meal_limit > 0
 		&& philo->meal_count == philo->table->meal_limit)
 		set_bool(&philo->philo_mutex, &philo->is_full, true);
-	
-	//unlock
-	// pthread_mutex_unlock(&philo->first_fork->fork);
-	// pthread_mutex_unlock(&philo->second_fork->fork);
 	safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
 	safe_mutex_handle(&philo->second_fork->fork, UNLOCK);
 }
 
-static void	*simulation(void *input) //func manages only 1 philo
+static void	*simulation(void *input)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)input;
-	
-	// we have to wait for all the threads - spinlock
 	ft_spinlock(philo->table);
-	
-	//set last meal time
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
-
-	//synchro spinlock
-	//incease running_philos num
 	safe_mutex_handle(&philo->table->table_mutex, LOCK);
 	philo->table->running_philos_num++;
 	safe_mutex_handle(&philo->table->table_mutex, UNLOCK);
-
-
-
+	desync_philos(philo);
 	while (!dinner_finished(philo->table))
 	{
-		if (philo->is_full) //is it thread safe?
+		if (philo->is_full)
 			break ;
 		eating(philo);
-
 		print_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table->time_to_sleep, philo->table);
-
-		thinking(philo);
+		thinking(philo, false);
 	}
 	return (NULL);
 }
@@ -87,40 +95,20 @@ void	start_the_dinner(t_table *table)
 	if (table->meal_limit == 0)
 		return ;
 	else if (table->philo_num == 1)
-		; //todo
+		safe_thread_handle(&table->philos[0].thread_id, one_philo,
+			&table->philos[0], CREATE);
 	else
 		while (++i < table->philo_num) //in this while we have an issue
 		{
-			// pthread_create(&table->philos[i].thread_id, NULL, simulation,
-			// 	&table->philos[i]); //there is some error here
 			safe_thread_handle(&table->philos[i].thread_id, simulation,
 					&table->philos[i], CREATE);
 		}
-	//philos are ready
-
-	// monitor
 	safe_thread_handle(&table->monitor, dinner_monitor, table, CREATE);
-
-	//start
 	table->simulation_start = gettime(MILLISECOND);
-
-	// pthread_mutex_lock(&table->table_mutex);
-	// table->philos_ready = true;
-	// pthread_mutex_unlock(&table->table_mutex);
 	set_bool(&table->table_mutex, &table->philos_ready, true);
-
-	//we should check if there is some error with (UN)LOCK
-	// printf(GREEN "======\n" RESET); 	//del
-
 	i = -1;
 	while (++i < table->philo_num)
-	{
-		// pthread_join(table->philos[i].thread_id, NULL);
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
-		//check for errors when joining
-	}
-	// in this line, all philos are full
 	set_bool(&table->table_mutex, &table->is_end_of_simulation, true);
-
 	safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
 }
