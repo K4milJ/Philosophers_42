@@ -6,23 +6,23 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:01:34 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 14:40:44 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:42:42 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static bool is_digit(char c)
+static bool	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-static bool is_space(char c)
+static bool	is_space(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-static const char *valid_input(const char *str)
+static const char	*valid_input(const char *str)
 {
 	int			len;
 	const char	*number;
@@ -54,7 +54,7 @@ long	ft_atol(const char *str)
 	{
 		num = (num * 10) + (*str - 48);
 		str++;
-	}	
+	}
 	if (num > INT_MAX)
 		error_exit("The value is too big, INT_MAX is the limit");
 	return (num);

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 14:27:54 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:42:09 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*one_philo(void *input)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)input;
 	ft_spinlock(philo->table);
@@ -37,8 +37,7 @@ void	thinking(t_philo *philo, bool before_sim)
 	if (!before_sim)
 		print_status(THINKING, philo);
 	if (philo->table->philo_num % 2 == 0)
-		return;
-
+		return ;
 	t_eat = philo->table->time_to_eat;
 	t_sleep = philo->table->time_to_sleep;
 	t_think = t_eat * 2 - t_sleep;
@@ -99,10 +98,8 @@ void	start_the_dinner(t_table *table)
 			&table->philos[0], CREATE);
 	else
 		while (++i < table->philo_num)
-		{
 			safe_thread_handle(&table->philos[i].thread_id, simulation,
-					&table->philos[i], CREATE);
-		}
+				&table->philos[i], CREATE);
 	safe_thread_handle(&table->monitor, dinner_monitor, table, CREATE);
 	table->simulation_start = gettime(MILLISECOND);
 	set_bool(&table->table_mutex, &table->philos_ready, true);

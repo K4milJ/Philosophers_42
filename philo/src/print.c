@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:53:25 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 14:27:44 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:44:03 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	print_status(t_philo_status status, t_philo *philo)
 	long	elapsed_time;
 
 	elapsed_time = gettime(MILLISECOND) - philo->table->simulation_start;
-
 	safe_mutex_handle(&philo->table->print_mutex, LOCK);
 	if (philo->is_full)
 	{

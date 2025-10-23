@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:35 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 16:49:27 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:43:14 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	parsing(t_table *table, char **argv)
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
 	table->time_to_eat = ft_atol(argv[3]) * 1e3;
 	table->time_to_sleep = ft_atol(argv[4]) * 1e3;
-	if (table->time_to_die <= 6e4 || table->time_to_eat <= 6e4 ||
-		table->time_to_sleep <= 6e4)
+	if (table->time_to_die <= 6e4 || table->time_to_eat <= 6e4
+		|| table->time_to_sleep <= 6e4)
 	{
 		error_exit("Timestamps must bigger than 60ms");
 	}

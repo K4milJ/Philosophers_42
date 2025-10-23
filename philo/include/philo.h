@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 14:26:27 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:40:42 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <limits.h>
 #include <errno.h>
 
-typedef struct	s_table t_table;
+typedef struct s_table	t_table;
 
 typedef enum e_opcode
 {
@@ -49,13 +49,13 @@ typedef enum e_philo_status
 	DIED
 }	t_philo_status;
 
-typedef struct	s_fork
+typedef struct s_fork
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
 }	t_fork;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				philo_id;
 	long			meal_count;
@@ -68,7 +68,7 @@ typedef struct	s_philo
 	t_table			*table;
 }	t_philo;
 
-typedef struct	s_table
+typedef struct s_table
 {
 	long			philo_num;
 	long			time_to_die;
@@ -108,12 +108,12 @@ void	print_status(t_philo_status status, t_philo *philo);
 void	*safe_malloc(size_t bytes);
 void	safe_mutex_handle(pthread_mutex_t *mutex, t_opcode opcode);
 void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
-		t_opcode opcode);
+			t_opcode opcode);
 
 /* SYNCHRONIZATION */
 void	ft_spinlock(t_table *table);
 bool	all_philos_running(pthread_mutex_t *mutex, long *running_philos_num,
-		long philo_num);
+			long philo_num);
 void	desync_philos(t_philo *philo);
 
 /* UTILS FUNC */

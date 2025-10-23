@@ -6,13 +6,13 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:41 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 17:39:35 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:43:43 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_table	table;
 

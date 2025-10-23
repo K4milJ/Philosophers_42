@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:03:19 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 12:10:07 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:45:08 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static void	handle_thread_error(int status, t_opcode opcode)
 		error_exit("Deadlock detected");
 }
 
-void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_opcode opcode)
+void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
+			t_opcode opcode)
 {
 	if (opcode == CREATE)
 		handle_thread_error(pthread_create(thread, NULL, foo, data), opcode);
