@@ -28,7 +28,7 @@ static void	print_status_debug(t_philo_status status, t_philo *philo,
 		printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
 	else if (status == THINKING && !dinner_finished(philo->table))
 		printf("%ld %d is thinking\n", elapsed_time, philo->philo_id);
-	else if (status == DIED && !dinner_finished(philo->table))
+	else if (status == DIED)
 		printf("%ld %d died\n", elapsed_time, philo->philo_id);
 }
 
@@ -38,9 +38,12 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 
 	elapsed_time = gettime(MILLISECOND) - philo->table->simulation_start;
 
-	if (philo->is_full)
-		return ;
 	safe_mutex_handle(&philo->table->print_mutex, LOCK);
+	if (philo->is_full)
+	{
+		safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
+		return ;
+	}
 	if (debug)
 		print_status_debug(status, philo, elapsed_time);
 	else
@@ -54,7 +57,7 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 			printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
 		else if (status == THINKING && !dinner_finished(philo->table))
 			printf("%ld %d is thinking\n", elapsed_time, philo->philo_id);
-		else if (status == DIED && !dinner_finished(philo->table))
+		else if (status == DIED)
 			printf("%ld %d died\n", elapsed_time, philo->philo_id);
 	}
 	safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
