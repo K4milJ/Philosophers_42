@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:03:19 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 13:24:14 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:10:07 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-static void	handle_mutex_error(int status, t_opcode opcode) //add DESTROY
+static void	handle_mutex_error(int status, t_opcode opcode)
 {
 	if (status == 0)
 		return ;
 	if (status == EINVAL && (opcode == LOCK || opcode == UNLOCK))
 		error_exit("mutex error");
-	else if (status == EINVAL && opcode == INIT)
+	else if (status == EINVAL && (opcode == INIT || opcode == DESTROY))
 		error_exit("mutex error");
 	else if (status == EDEADLK)
 		error_exit("Possible deadlock");
