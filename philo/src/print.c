@@ -6,33 +6,13 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:53:25 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 11:33:18 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:27:44 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static void	print_status_debug(t_philo_status status, t_philo *philo,
-		long elapsed_time)
-{
-	if (status == TAKE_1_FORK && !dinner_finished(philo->table))
-		printf("%ld %d has taken 1st fork\t%d\n", elapsed_time, philo->philo_id,
-				philo->first_fork->fork_id);
-	else if (status == TAKE_2_FORK && !dinner_finished(philo->table))
-		printf("%ld %d has taken 2nd fork\t%d\n", elapsed_time, philo->philo_id,
-				philo->second_fork->fork_id);
-	else if (status == EATING && !dinner_finished(philo->table))
-		printf("%ld %d is eating\t%ld\n", elapsed_time, philo->philo_id,
-				philo->meal_count);
-	else if (status == SLEEPING && !dinner_finished(philo->table))
-		printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
-	else if (status == THINKING && !dinner_finished(philo->table))
-		printf("%ld %d is thinking\n", elapsed_time, philo->philo_id);
-	else if (status == DIED)
-		printf("%ld %d died\n", elapsed_time, philo->philo_id);
-}
-
-void	print_status(t_philo_status status, t_philo *philo, bool debug)
+void	print_status(t_philo_status status, t_philo *philo)
 {
 	long	elapsed_time;
 
@@ -44,21 +24,16 @@ void	print_status(t_philo_status status, t_philo *philo, bool debug)
 		safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
 		return ;
 	}
-	if (debug)
-		print_status_debug(status, philo, elapsed_time);
-	else
-	{
-		if ((status == TAKE_1_FORK || status == TAKE_2_FORK)
-			&& !dinner_finished(philo->table))
-			printf("%ld %d has taken a fork\n", elapsed_time, philo->philo_id);
-		else if (status == EATING && !dinner_finished(philo->table))
-			printf("%ld %d is eating\n", elapsed_time, philo->philo_id);
-		else if (status == SLEEPING && !dinner_finished(philo->table))
-			printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
-		else if (status == THINKING && !dinner_finished(philo->table))
-			printf("%ld %d is thinking\n", elapsed_time, philo->philo_id);
-		else if (status == DIED)
-			printf("%ld %d died\n", elapsed_time, philo->philo_id);
-	}
+	if ((status == TAKE_1_FORK || status == TAKE_2_FORK)
+		&& !dinner_finished(philo->table))
+		printf("%ld %d has taken a fork\n", elapsed_time, philo->philo_id);
+	else if (status == EATING && !dinner_finished(philo->table))
+		printf("%ld %d is eating\n", elapsed_time, philo->philo_id);
+	else if (status == SLEEPING && !dinner_finished(philo->table))
+		printf("%ld %d is sleeping\n", elapsed_time, philo->philo_id);
+	else if (status == THINKING && !dinner_finished(philo->table))
+		printf("%ld %d is thinking\n", elapsed_time, philo->philo_id);
+	else if (status == DIED)
+		printf("%ld %d died\n", elapsed_time, philo->philo_id);
 	safe_mutex_handle(&philo->table->print_mutex, UNLOCK);
 }

@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:33:12 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 17:07:27 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:27:54 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*dinner_monitor(void *input)
 			{
 				set_bool(&table->table_mutex, &table->is_end_of_simulation,
 						true);
-				print_status(DIED, table->philos + i, DEBUG_MODE);
+				print_status(DIED, table->philos + i);
 			}
 		}
 	}

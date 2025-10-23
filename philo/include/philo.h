@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 13:50:45 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/23 11:33:26 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:26:27 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <sys/time.h>
 #include <limits.h>
 #include <errno.h>
-
-#define DEBUG_MODE 0
 
 typedef struct	s_table t_table;
 
@@ -104,7 +102,7 @@ void	parsing(t_table *table, char **argv);
 void	*dinner_monitor(void *input);
 
 /* PRINT */
-void	print_status(t_philo_status status, t_philo *philo, bool debug);
+void	print_status(t_philo_status status, t_philo *philo);
 
 /* SAFE FUNCTIONS */
 void	*safe_malloc(size_t bytes);

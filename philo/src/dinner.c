@@ -6,7 +6,7 @@
 /*   By: kjamrosz <kjamrosz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 10:57:42 by kjamrosz          #+#    #+#             */
-/*   Updated: 2025/10/16 17:39:18 by kjamrosz         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:27:54 by kjamrosz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*one_philo(void *input)
 	safe_mutex_handle(&philo->table->table_mutex, LOCK);
 	philo->table->running_philos_num++;
 	safe_mutex_handle(&philo->table->table_mutex, UNLOCK);
-	print_status(TAKE_1_FORK, philo, DEBUG_MODE);
+	print_status(TAKE_1_FORK, philo);
 	while (!dinner_finished(philo->table))
 		usleep(200);
 	return (NULL);
@@ -35,7 +35,7 @@ void	thinking(t_philo *philo, bool before_sim)
 	long	t_sleep;
 
 	if (!before_sim)
-		print_status(THINKING, philo, DEBUG_MODE);
+		print_status(THINKING, philo);
 	if (philo->table->philo_num % 2 == 0)
 		return;
 
@@ -50,12 +50,12 @@ void	thinking(t_philo *philo, bool before_sim)
 static void	eating(t_philo *philo)
 {
 	safe_mutex_handle(&philo->first_fork->fork, LOCK);
-	print_status(TAKE_1_FORK, philo, DEBUG_MODE);
+	print_status(TAKE_1_FORK, philo);
 	safe_mutex_handle(&philo->second_fork->fork, LOCK);
-	print_status(TAKE_2_FORK, philo, DEBUG_MODE);
+	print_status(TAKE_2_FORK, philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	philo->meal_count++;
-	print_status(EATING, philo, DEBUG_MODE);
+	print_status(EATING, philo);
 	precise_usleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->meal_limit > 0
 		&& philo->meal_count == philo->table->meal_limit)
@@ -80,7 +80,7 @@ static void	*simulation(void *input)
 		if (philo->is_full)
 			break ;
 		eating(philo);
-		print_status(SLEEPING, philo, DEBUG_MODE);
+		print_status(SLEEPING, philo);
 		precise_usleep(philo->table->time_to_sleep, philo->table);
 		thinking(philo, false);
 	}
